@@ -9,7 +9,10 @@ public class Task {
     private final long id;
     private final String title;
     private boolean completed;
+  
+    private final Priority priority;
 
+ 
     public Task(long id, String title) {
         if (id <= 0) {
             throw new IllegalArgumentException("任务编号必须为正数");
@@ -19,6 +22,25 @@ public class Task {
         }
         this.id = id;
         this.title = title.trim();
+        this.completed = false;
+        this.priority = Priority.MEDIUM;
+    }
+
+    // 新增：带优先级的构造方法
+    public Task(long id, String title, Priority priority) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("任务编号必须为正数");
+        }
+        if (title == null || title.isBlank()) {
+            throw new IllegalArgumentException("任务标题不能为空");
+        }
+        if (priority == null) {
+            throw new IllegalArgumentException("优先级不能为空");
+        }
+        this.id = id;
+        this.title = title.trim();
+        this.completed = false;
+        this.priority = priority;
     }
 
     public long getId() {
@@ -35,6 +57,11 @@ public class Task {
 
     public void complete() {
         completed = true;
+    }
+
+    // 新增：获取优先级
+    public Priority getPriority() {
+        return priority;
     }
 
     @Override
