@@ -65,3 +65,13 @@ git push origin v0.1.0
 - 作者不能批准自己的 Pull Request；评审意见处理完毕且 CI 通过后再合并。
 - 不提交 `.idea/`、`target/`、访问令牌、账号密码或个人隐私数据。
 - 禁止使用 `git push --force` 修改共享的 `main` 分支。
+
+## 协作流程
+1. 在Issues领取任务；
+2. 从main分支创建feature/xxx功能分支；
+3. 本地开发，小步提交；
+4. 推送远程，新建Pull Request；
+5. 等待代码评审，根据意见修改；
+6. CI全部绿灯、获得Approve之后，管理员合并；
+7. 合并完成删除旧功能分支，同步main。
+
