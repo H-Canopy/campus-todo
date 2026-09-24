@@ -57,6 +57,18 @@ class TaskServiceTest {
     }
 
     @Test
+    void shouldFilterEachPriorityIndependently() {
+        TaskService service = new TaskService();
+        var high = service.addTask("处理线上事故", Priority.HIGH);
+        var medium = service.addTask("例行周会", Priority.MEDIUM);
+        var low = service.addTask("整理笔记", Priority.LOW);
+
+        assertEquals(List.of(high), service.filterByPriority(Priority.HIGH));
+        assertEquals(List.of(medium), service.filterByPriority(Priority.MEDIUM));
+        assertEquals(List.of(low), service.filterByPriority(Priority.LOW));
+    }
+
+    @Test
     void shouldReturnEmptyListWhenNoMatch() {
         TaskService service = new TaskService();
         service.addTask("例行周会", Priority.MEDIUM);
