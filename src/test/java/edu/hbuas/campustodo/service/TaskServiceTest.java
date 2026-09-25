@@ -103,8 +103,10 @@ class TaskServiceTest {
         TaskService service = new TaskService();
         service.addTask("整理提交材料");
 
-        assertThrows(IllegalArgumentException.class,
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
                 () -> service.completeTask(999L));
+
+        assertEquals("任务不存在，编号：999", ex.getMessage());
     }
 
     @Test
@@ -113,7 +115,9 @@ class TaskServiceTest {
         var task = service.addTask("整理提交材料");
         service.completeTask(task.getId());
 
-        assertThrows(IllegalArgumentException.class,
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
                 () -> service.completeTask(task.getId()));
+
+        assertEquals("任务已完成，不能重复完成", ex.getMessage());
     }
 }

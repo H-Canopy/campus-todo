@@ -62,7 +62,7 @@ public class TaskService {
         Task task = tasks.stream()
                 .filter(t -> t.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("任务不存在：" + id));
+                .orElseThrow(() -> new IllegalArgumentException("任务不存在，编号：" + id));
         if (task.isCompleted()) {
             throw new IllegalArgumentException("任务已完成，不能重复完成");
         }
