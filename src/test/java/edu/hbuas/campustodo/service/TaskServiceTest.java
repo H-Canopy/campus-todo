@@ -85,4 +85,39 @@ class TaskServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> service.filterByPriority(null));
     }
+
+    // ---- Issue #2：按编号完成任务 ----
+
+    @Test
+    void shouldCompleteTaskById() {
+        TaskService service = new TaskService();
+        var task = service.addTask("整理提交材料");
+
+        service.completeTask(task.getId());
+
+        assertTrue(task.isCompleted());
+    }
+
+    @Test
+    void shouldRejectUnknownTaskId() {
+        TaskService service = new TaskService();
+        service.addTask("整理提交材料");
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> service.completeTask(999L));
+
+        assertEquals("任务不存在，编号：999", ex.getMessage());
+    }
+
+    @Test
+    void shouldRejectCompletingAlreadyCompletedTask() {
+        TaskService service = new TaskService();
+        var task = service.addTask("整理提交材料");
+        service.completeTask(task.getId());
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> service.completeTask(task.getId()));
+
+        assertEquals("任务已完成，不能重复完成", ex.getMessage());
+    }
 }

@@ -51,4 +51,21 @@ public class TaskService {
                 .filter(task -> task.getPriority() == priority)
                 .toList();
     }
+
+    /**
+     * 按编号完成任务。任务不存在或已重复完成时会抛出异常。
+     *
+     * @param id 要完成的任务编号，必须存在且尚未完成
+     * @throws IllegalArgumentException 当编号不存在或任务已完成时
+     */
+    public void completeTask(long id) {
+        Task task = tasks.stream()
+                .filter(t -> t.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("任务不存在，编号：" + id));
+        if (task.isCompleted()) {
+            throw new IllegalArgumentException("任务已完成，不能重复完成");
+        }
+        task.complete();
+    }
 }
